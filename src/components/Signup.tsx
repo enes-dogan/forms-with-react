@@ -1,6 +1,14 @@
 export default function Signup() {
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
+
+    const fd = new FormData(event.target as HTMLFormElement);
+    const acquisitionChannel = fd.getAll('acquisition');
+    const data: formDataType = Object.fromEntries(fd.entries());
+    data.acquisition = acquisitionChannel;
+    console.log(data);
+
+    event.currentTarget.reset();
   }
 
   return (
@@ -100,3 +108,7 @@ export default function Signup() {
     </form>
   );
 }
+
+type formDataType = {
+  [k: string]: FormDataEntryValue | FormDataEntryValue[];
+};

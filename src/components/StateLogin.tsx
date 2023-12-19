@@ -7,6 +7,9 @@ const INITIAL_STATE = {
 
 export default function Login() {
   const [enteredValues, setEnteredValues] = useState(INITIAL_STATE);
+  const [didEdit, setDidEdit] = useState({ email: false, password: false });
+
+  const emailIsInvalid = didEdit.email && !enteredValues.email.includes('@');
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -23,11 +26,23 @@ export default function Login() {
       ...prevValues,
       [name]: value,
     }));
+    setDidEdit(prevEdit => ({
+      ...prevEdit,
+      [name]: false,
+    }));
+  }
+
+  function handleInputBlur(event: React.FocusEvent<HTMLInputElement>) {
+    const { name } = event.target;
+    setDidEdit(prevEdit => ({
+      ...prevEdit,
+      [name]: true,
+    }));
   }
 
   return (
     <form onSubmit={handleSubmit}>
-      <h2>STATE Login</h2>
+      <h2>State Login</h2>
 
       <div className="control-row">
         <div className="control no-margin">
@@ -36,9 +51,13 @@ export default function Login() {
             id="email"
             type="email"
             name="email"
+            onBlur={handleInputBlur}
             onChange={handleInputChange}
             value={enteredValues.email}
           />
+          <div className="control-error">
+            {emailIsInvalid && <p>Please enter a vaild email adress.</p>}
+          </div>
         </div>
 
         <div className="control no-margin">
@@ -47,6 +66,7 @@ export default function Login() {
             id="password"
             type="password"
             name="password"
+            onBlur={handleInputBlur}
             onChange={handleInputChange}
             value={enteredValues.password}
           />
