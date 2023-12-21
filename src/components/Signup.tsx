@@ -1,4 +1,7 @@
 import { useState } from 'react';
+
+import { SignUpFormDataType } from '../types.ts';
+
 export default function Signup() {
   const [passwordsAreNotEqual, setPasswordsAreNotEqual] = useState(false);
 
@@ -7,7 +10,7 @@ export default function Signup() {
 
     const fd = new FormData(event.target as HTMLFormElement);
     const acquisitionChannel = fd.getAll('acquisition');
-    const data: formDataType = Object.fromEntries(fd.entries());
+    const data: SignUpFormDataType = Object.fromEntries(fd.entries());
     data.acquisition = acquisitionChannel;
 
     if (data.password !== data['confirm-password']) {
@@ -133,7 +136,3 @@ export default function Signup() {
     </form>
   );
 }
-
-type formDataType = {
-  [k: string]: FormDataEntryValue | FormDataEntryValue[];
-};
