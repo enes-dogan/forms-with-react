@@ -12,8 +12,9 @@ export default function Login() {
       }`
     );
 
-    emailRef.current!.value = '';
-    passwordRef.current!.value = '';
+    // emailRef.current!.value = '';
+    // passwordRef.current!.value = '';
+    event.currentTarget.reset();
 
     const emailIsValid = emailRef.current!.value.includes('@');
 
